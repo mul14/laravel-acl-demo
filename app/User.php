@@ -40,11 +40,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function assignRole($role)
     {
+        if (is_string($role)) {
+            $role = Role::where('name', $role)->first();
+        }
+
         return $this->roles()->attach($role);
     }
 
     public function revokeRole($role)
     {
+        if (is_string($role)) {
+            $role = Role::where('name', $role)->first();
+        }
+
         return $this->roles()->detach($role);
     }
 
